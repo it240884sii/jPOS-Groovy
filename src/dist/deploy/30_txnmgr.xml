@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ jPOS-Groovy jPOS based project [http://jpos.org]
+  ~ Copyright (C) 2000-2019 Alejandro P. Revilla
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as
+  ~ published by the Free Software Foundation, either version 3 of the
+  ~ License, or (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<txnmgr class="org.jpos.transaction.TransactionManager" logger="Q2">
+    <property name="queue" value="TXNMGR"/>
+    <property name="space" value="tspace:default" />
+    <property name="sessions" value="5"/>
+    <property name="max-sessions" value="10"/>
+    <property name="max-active-sessions" value="10"/>
+    <property name="debug" value="true"/>
+    <property name="profiler" value="true"/>
+
+    <participant class="org.jpos.transaction.participant.GroovyGroupSelector" logger="Q2" realm="groovy-select">
+	
+	    <select src="cfg/groovy/select.groovy" />
+        <property name="compiled" value="true" />
+        <property name="0800" value="network0800" />
+        <property name="1800" value="network1800" />
+    </participant>
+
+    <group name="network0800">
+        <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="groovy-0800">
+            <prepare src="cfg/groovy/800.groovy" />
+            <property name="compiled" value="true" />
+            <property name="response" value="00000" />
+        </participant>
+        <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="send-response">
+            <prepare src="cfg/groovy/send-response-prepare.groovy" />
+            <commit  src="cfg/groovy/send-response-commit.groovy" />
+            <abort   src="cfg/groovy/send-response-commit.groovy" />
+            <property name="compiled" value="true" />
+        </participant>
+    </group>
+
+    <group name="network1800">
+        <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="groovy-1800">
+            <prepare src="cfg/groovy/800.groovy" />
+            <property name="compiled" value="true" />
+            <property name="response" value="00000" />
+        </participant>
+        <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="send-response">
+            <prepare src="cfg/groovy/send-response-prepare.groovy" />
+            <commit  src="cfg/groovy/send-response-commit.groovy" />
+            <abort   src="cfg/groovy/send-response-commit.groovy" />
+            <property name="compiled" value="true" />
+        </participant>
+    </group>
+
+</txnmgr>

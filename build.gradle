@@ -1,0 +1,37 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+buildscript {
+    repositories { jcenter() }
+}
+
+group = 'org.jpos.template'
+version = '2.1.4-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url 'http://jpos.org/maven' }
+    maven { url 'http://download.oracle.com/maven' }
+}
+
+dependencies {
+    compile ('org.jpos:jpos:2.1.4-*') {
+        exclude(module: 'junit')
+        exclude(module: 'hamcrest-core')
+    }
+    compile ('org.jpos.ee:jposee-db-h2:2.2.+')
+    compile ('org.jpos.ee:jposee-txn:2.2.+')
+    compile ('org.jpos.ee:jposee-groovy:2.2.+')
+    compile ('com.sun.xml.bind:jaxb-impl:2.1.2')
+    compile ('com.sun.activation:javax.activation:1.2.0')
+    compile ('javax.xml.bind:jaxb-api:2.3.0')
+    testCompile 'junit:junit:4.8.2'
+}
+
+apply from: 'jpos-app.gradle'
+

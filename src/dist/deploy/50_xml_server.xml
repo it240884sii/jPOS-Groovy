@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ jPOS-Groovy jPOS based project [http://jpos.org]
+  ~ Copyright (C) 2000-2019 Alejandro P. Revilla
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as
+  ~ published by the Free Software Foundation, either version 3 of the
+  ~ License, or (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<server class="org.jpos.q2.iso.QServer" logger="Q2" name="xml-server-9000" realm="xml-server-9000">
+    <attr name="port" type="java.lang.Integer">9000</attr>
+    <channel class="org.jpos.iso.channel.XMLChannel"
+             packager="org.jpos.iso.packager.XMLPackager"
+             type="server"
+             logger="Q2"
+             realm="xml-server-9000">
+        <property name="timeout" value="180000"/>
+    </channel>
+    <in>xml-send</in>
+    <out>xml-receive</out>
+    <send-request>RR</send-request>
+</server>
+
