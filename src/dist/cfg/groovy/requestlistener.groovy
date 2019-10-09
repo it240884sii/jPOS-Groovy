@@ -25,29 +25,29 @@ import org.jpos.transaction.Context
 import org.jpos.transaction.ContextConstants
 import java.util.stream.Collectors
 
-def timeout  = cfg.getLong ("timeout", 15000L);
-def sp = (Space<String, Context>) SpaceFactory.getSpace (cfg.get ("space"));
-def queue = cfg.get ("queue", null);
+def timeout  = cfg.getLong ("timeout", 15000L)
+def sp = (Space<String, Context>) SpaceFactory.getSpace (cfg.get ("space"))
+def queue = cfg.get ("queue", null)
 if (queue == null)
-    throw new ConfigurationException ("queue property not specified");
-def src =  cfg.get ("source", ContextConstants.SOURCE.toString());
-def request = cfg.get ("request", ContextConstants.REQUEST.toString());
-def timestamp = cfg.get ("timestamp", ContextConstants.TIMESTAMP.toString());
-def remote = cfg.getBoolean("remote") || cfg.get("space").startsWith("rspace:");
+    throw new ConfigurationException ("queue property not specified")
+def src =  cfg.get ("source", ContextConstants.SOURCE.toString())
+def request = cfg.get ("request", ContextConstants.REQUEST.toString())
+def timestamp = cfg.get ("timestamp", ContextConstants.TIMESTAMP.toString())
+def remote = cfg.getBoolean("remote") || cfg.get("space").startsWith("rspace:")
 
-def additionalContextEntries;
-Map<String,String> m = new HashMap<>();
-cfg.keySet().stream().filter {it.startsWith("ctx.")}.forEach{it -> m.put(it.substring(4), cfg.get(it))};
-if (m.size() > 0)  additionalContextEntries = m;
+def additionalContextEntries
+Map<String,String> m = new HashMap<>()
+cfg.keySet().stream().filter {it.startsWith("ctx.")}.forEach{it -> m.put(it.substring(4), cfg.get(it))}
+if (m.size() > 0)  additionalContextEntries = m
 
-def ctx  = new Context ();
+def ctx  = new Context ()
 if (remote)
-    src = new SpaceSource((LocalSpace)sp, source, timeout);
-ctx.put (timestamp, new Date(), remote);
-ctx.put (src,  source, remote);
-ctx.put (request, message, remote);
+    src = new SpaceSource((LocalSpace)sp, source, timeout)
+ctx.put (timestamp, new Date(), remote)
+ctx.put (src,  source, remote)
+ctx.put (request, message, remote)
 if (additionalContextEntries != null)
-    additionalContextEntries.entrySet().forEach{it -> ctx.put(it.getKey(), it.getValue(), remote)};
+    additionalContextEntries.entrySet().forEach{it -> ctx.put(it.getKey(), it.getValue(), remote)}
+sp.out(queue, ctx, timeout)
 
-sp.out(queue, ctx, timeout);
-return true;
+return true
