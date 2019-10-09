@@ -23,14 +23,14 @@ import org.jpos.util.Caller;
 import static org.jpos.transaction.TransactionConstants.*;
 
 
-def request = ContextConstants.REQUEST.toString()
+def req = ContextConstants.REQUEST.toString()
 def response = ContextConstants.RESPONSE.toString()
 def resp = cfg.get("response", "00")
 
-ISOMsg m = ctx[request]
-m.setResponseMTI()
-m.set(39, resp)
-ctx[response] = m
+def r = ctx[req].clone()
+r.setResponseMTI()
+r.set(39, resp)
+ctx[response] = r
 ctx.getResult().success (CMF.APPROVED, Caller.info(),"transaction approved")
 
 return PREPARED | NO_JOIN | READONLY
