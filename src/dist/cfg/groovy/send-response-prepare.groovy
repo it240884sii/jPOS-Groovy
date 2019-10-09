@@ -17,13 +17,13 @@
  */
 import org.jpos.iso.ISOSource
 import org.jpos.transaction.Context
-import org.jpos.transaction.ContextConstants;
+import org.jpos.transaction.ContextConstants
 
-import static org.jpos.transaction.TransactionConstants.*;
+import static org.jpos.transaction.TransactionConstants.*
 
-Context ctx = (Context) ctx;
-ISOSource src = (ISOSource) ctx.get (ContextConstants.SOURCE.toString());
+def source = ContextConstants.SOURCE.toString()
+def src = ctx[source]
 if (src == null || !src.isConnected())
-    return ABORTED | READONLY | NO_JOIN;
+    return ABORTED | READONLY | NO_JOIN
 
-return PREPARED | READONLY;
+return PREPARED | READONLY
