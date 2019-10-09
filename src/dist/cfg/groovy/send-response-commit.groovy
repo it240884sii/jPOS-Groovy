@@ -25,34 +25,34 @@ import static org.jpos.transaction.ContextConstants.RESPONSE
 import static org.jpos.transaction.ContextConstants.SOURCE
 import static org.jpos.transaction.ContextConstants.TX
 
-def source   = cfg.get ("source",   SOURCE.toString());
-def request =  cfg.get ("request",  REQUEST.toString());
-def response = cfg.get ("response", RESPONSE.toString());
-def timeout  = cfg.getLong ("timeout", 70000L);
-def isp = (LocalSpace) tm.getInputSpace();
+def source   = cfg.get ("source",   SOURCE.toString())
+def request =  cfg.get ("request",  REQUEST.toString())
+def response = cfg.get ("response", RESPONSE.toString())
+def timeout  = cfg.getLong ("timeout", 70000L)
+def isp = (LocalSpace) tm.getInputSpace()
 
-ISOSource src = (ISOSource) ctx.get (source);
-ISOMsg m = (ISOMsg) ctx.get(request);
-ISOMsg resp = (ISOMsg) ctx.get (response);
+def src = ctx[source]
+def m = ctx[request]
+def resp = ctx[response]
 try {
     if (ctx.getResult().hasInhibit()) {
-        ctx.log("*** RESPONSE INHIBITED ***");
-    } else if (ctx.get (TX.toString()) != null) {
-        ctx.log("*** PANIC - TX not null - RESPONSE OMITTED ***");
+        ctx.log("*** RESPONSE INHIBITED ***")
+    } else if (ctx[TX.toString()] != null) {
+        ctx.log("*** PANIC - TX not null - RESPONSE OMITTED ***")
     } else if (resp == null) {
-        ctx.log (response + " not present");
+        ctx.log (response + " not present")
     } else if (src == null) {
-        ctx.log (source + " not present");
+        ctx.log (source + " not present")
     } else if (!src.isConnected())
-        ctx.log (source + " is no longer connected");
+        ctx.log (source + " is no longer connected")
     else {
         if (src instanceof SpaceSource)
-            ((SpaceSource)src).init(isp, timeout);
+            ((SpaceSource)src).init(isp, timeout)
         if (src.isConnected() && resp != null) {
 //            headerStrategy.handleHeader(m, resp);
-            src.send(resp);
+            src.send(resp)
         }
     }
 } catch (Throwable t) {
-    ctx.log(t);
+    ctx.log(t)
 }
