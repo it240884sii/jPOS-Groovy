@@ -19,7 +19,9 @@ import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.Context;
 import org.jpos.transaction.ContextConstants;
 
+def request = ContextConstants.REQUEST.toString()
 
-ISOMsg m = (ISOMsg) ((Context)ctx).get (ContextConstants.REQUEST.toString());
-String groups = cfg.get (m.getMTI(), null);
-return groups;
+ISOMsg m = ctx[request]
+def groups = cfg.get (m.getMTI(), null)
+
+return groups
