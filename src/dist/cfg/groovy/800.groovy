@@ -20,15 +20,18 @@ import org.jpos.rc.CMF;
 import org.jpos.transaction.Context;
 import org.jpos.transaction.ContextConstants
 import org.jpos.util.Caller;
-
 import static org.jpos.transaction.TransactionConstants.*;
 
 
+def request = ContextConstants.REQUEST.toString()
+def response = ContextConstants.RESPONSE.toString()
+def resp = cfg.get("response", "00")
 
-String response = cfg.get("response", "00");
-ISOMsg m = (ISOMsg) ((Context)ctx).get (ContextConstants.REQUEST.toString());
-m.setResponseMTI();
-m.set(39, response);
-((Context)ctx).put (ContextConstants.RESPONSE.toString(), m);
-((Context)ctx).getResult().success (CMF.APPROVED, Caller.info(),"transaction approved");
-return PREPARED | NO_JOIN | READONLY;
+ISOMsg m = ctx[request]
+m.setResponseMTI()
+m.set(39, resp)
+ctx[response] = m
+ctx.getResult().success (CMF.APPROVED, Caller.info(),"transaction approved")
+
+return PREPARED | NO_JOIN | READONLY
+
