@@ -19,4 +19,5 @@ import org.jpos.iso.ISOMsg;
 import org.jpos.transaction.Context;
 import org.jpos.transaction.ContextConstants;
 
-cfg[ctx[ContextConstants.REQUEST.toString()].getMTI()]
+cfg[ctx.REQUEST.MTI]
+
