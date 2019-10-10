@@ -21,7 +21,7 @@ import org.jpos.transaction.ContextConstants;
 
 def request = ContextConstants.REQUEST.toString()
 
-ISOMsg m = ctx[request]
+def m = ctx[request]
 def groups = cfg.get (m.getMTI(), null)
 
 return groups
