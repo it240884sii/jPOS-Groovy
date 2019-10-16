@@ -29,9 +29,9 @@ def sp = (Space<String, Context>) SpaceFactory.getSpace (cfg.get ("space"))
 def queue = cfg.get ("queue", null)
 if (queue == null)
     throw new ConfigurationException ("queue property not specified")
-def src =  cfg.get ("source", ContextConstants.SOURCE.toString())
-def request = cfg.get ("request", ContextConstants.REQUEST.toString())
-def timestamp = cfg.get ("timestamp", ContextConstants.TIMESTAMP.toString())
+def src =  cfg.get ("source", SOURCE.toString())
+def request = cfg.get ("request", REQUEST.toString())
+def timestamp = cfg.get ("timestamp", TIMESTAMP.toString())
 def remote = cfg.getBoolean("remote") || cfg.get("space").startsWith("rspace:")
 
 def additionalContextEntries
