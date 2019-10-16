@@ -20,11 +20,9 @@ import org.jpos.rc.CMF;
 import org.jpos.transaction.Context;
 import org.jpos.transaction.ContextConstants
 import org.jpos.util.Caller;
-import static org.jpos.transaction.TransactionConstants.*;
 
-
-def req = ContextConstants.REQUEST.toString()
-def response = ContextConstants.RESPONSE.toString()
+def req = REQUEST.toString()
+def response = RESPONSE.toString()
 def resp = cfg.get("response", "00")
 
 def r = ctx[req].clone()
