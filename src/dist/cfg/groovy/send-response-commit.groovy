@@ -20,11 +20,6 @@ import org.jpos.iso.ISOSource
 import org.jpos.space.LocalSpace
 import org.jpos.space.SpaceSource
 
-import static org.jpos.transaction.ContextConstants.REQUEST
-import static org.jpos.transaction.ContextConstants.RESPONSE
-import static org.jpos.transaction.ContextConstants.SOURCE
-import static org.jpos.transaction.ContextConstants.TX
-
 def source   = cfg.get ("source",   SOURCE.toString())
 def request =  cfg.get ("request",  REQUEST.toString())
 def response = cfg.get ("response", RESPONSE.toString())
