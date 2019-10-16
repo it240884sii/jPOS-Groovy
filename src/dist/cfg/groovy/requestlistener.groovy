@@ -22,7 +22,6 @@ import org.jpos.space.SpaceFactory
 import org.jpos.space.LocalSpace
 import org.jpos.space.SpaceSource
 import org.jpos.transaction.Context
-import org.jpos.transaction.ContextConstants
 import java.util.stream.Collectors
 
 def timeout  = cfg.getLong ("timeout", 15000L)
