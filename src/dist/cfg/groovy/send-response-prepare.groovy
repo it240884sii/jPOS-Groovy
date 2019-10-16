@@ -17,12 +17,8 @@
  */
 import org.jpos.iso.ISOSource
 import org.jpos.transaction.Context
-import org.jpos.transaction.ContextConstants
 
-import static org.jpos.transaction.TransactionConstants.*
-
-def source = ContextConstants.SOURCE.toString()
-def src = ctx[source]
+def src = ctx[SOURCE.toString()]
 if (src == null || !src.isConnected())
     return ABORTED | READONLY | NO_JOIN
 
