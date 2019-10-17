@@ -25,6 +25,10 @@
     <property name="debug" value="true"/>
     <property name="profiler" value="true"/>
 
+    <participant class="org.jpos.transaction.Open" logger="Q2" realm="open-db">
+        <property name="checkpoint" value="db-open"/>
+    </participant>
+
     <participant class="org.jpos.transaction.participant.GroovyGroupSelector" logger="Q2" realm="groovy-select">
 	
 	    <select src="cfg/groovy/select.groovy" />
@@ -39,12 +43,18 @@
             <property name="compiled" value="true" />
             <property name="response" value="00000" />
         </participant>
+
+        <participant class="org.jpos.transaction.Close" logger="Q2" realm="close-db">
+            <property name="checkpoint" value="close"/>
+        </participant>
+
         <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="send-response">
             <prepare src="cfg/groovy/send-response-prepare.groovy" />
             <commit  src="cfg/groovy/send-response-commit.groovy" />
             <abort   src="cfg/groovy/send-response-commit.groovy" />
             <property name="compiled" value="true" />
         </participant>
+
     </group>
 
     <group name="network1800">
@@ -53,12 +63,19 @@
             <property name="compiled" value="true" />
             <property name="response" value="00000" />
         </participant>
+
+        <participant class="org.jpos.transaction.Close" logger="Q2" realm="close-db">
+            <property name="checkpoint" value="close"/>
+        </participant>
+
         <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="send-response">
             <prepare src="cfg/groovy/send-response-prepare.groovy" />
             <commit  src="cfg/groovy/send-response-commit.groovy" />
             <abort   src="cfg/groovy/send-response-commit.groovy" />
             <property name="compiled" value="true" />
         </participant>
+
     </group>
 
 </txnmgr>
+
