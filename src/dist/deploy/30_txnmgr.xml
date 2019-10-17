@@ -43,6 +43,12 @@
             <property name="compiled" value="true" />
             <property name="response" value="00000" />
         </participant>
+	    
+	<participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="select-db">
+            <prepare src="cfg/groovy/select-db-prepare.groovy" />
+            <property name="compiled" value="true" />
+            <property name="checkpoint" value="select-db"/>
+        </participant>
 
         <participant class="org.jpos.transaction.Close" logger="Q2" realm="close-db">
             <property name="checkpoint" value="close"/>
@@ -64,6 +70,12 @@
             <property name="response" value="00000" />
         </participant>
 
+	<participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="select-db">
+            <prepare src="cfg/groovy/select-db-prepare.groovy" />
+            <property name="compiled" value="true" />
+            <property name="checkpoint" value="select-db"/>
+        </participant>
+	    
         <participant class="org.jpos.transaction.Close" logger="Q2" realm="close-db">
             <property name="checkpoint" value="close"/>
         </participant>
