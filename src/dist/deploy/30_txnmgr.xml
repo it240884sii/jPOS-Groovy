@@ -30,24 +30,24 @@
     </participant>
 
     <participant class="org.jpos.transaction.participant.GroovyGroupSelector" logger="Q2" realm="groovy-select">
-	
-	    <select src="cfg/groovy/select.groovy" />
+	<select src="cfg/groovy/select.groovy" />
         <property name="compiled" value="true" />
         <property name="0800" value="network0800" />
         <property name="1800" value="network1800" />
     </participant>
 
     <group name="network0800">
+
+        <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="select-db">
+            <prepare src="cfg/groovy/select-db-prepare.groovy" />
+            <property name="compiled" value="true" />
+            <property name="checkpoint" value="select-db"/>
+        </participant>
+
         <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="groovy-0800">
             <prepare src="cfg/groovy/800.groovy" />
             <property name="compiled" value="true" />
             <property name="response" value="00000" />
-        </participant>
-	    
-	<participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="select-db">
-            <prepare src="cfg/groovy/select-db-prepare.groovy" />
-            <property name="compiled" value="true" />
-            <property name="checkpoint" value="select-db"/>
         </participant>
 
         <participant class="org.jpos.transaction.Close" logger="Q2" realm="close-db">
@@ -64,18 +64,19 @@
     </group>
 
     <group name="network1800">
+
+        <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="select-db">
+            <prepare src="cfg/groovy/select-db-prepare.groovy" />
+            <property name="compiled" value="true" />
+            <property name="checkpoint" value="select-db"/>
+        </participant>
+
         <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="groovy-1800">
             <prepare src="cfg/groovy/800.groovy" />
             <property name="compiled" value="true" />
             <property name="response" value="00000" />
         </participant>
 
-	<participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="select-db">
-            <prepare src="cfg/groovy/select-db-prepare.groovy" />
-            <property name="compiled" value="true" />
-            <property name="checkpoint" value="select-db"/>
-        </participant>
-	    
         <participant class="org.jpos.transaction.Close" logger="Q2" realm="close-db">
             <property name="checkpoint" value="close"/>
         </participant>
@@ -90,4 +91,3 @@
     </group>
 
 </txnmgr>
-
