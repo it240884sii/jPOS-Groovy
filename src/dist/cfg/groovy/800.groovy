@@ -18,18 +18,12 @@
 import org.jpos.iso.ISOMsg
 import org.jpos.rc.CMF;
 import org.jpos.transaction.Context;
-import org.jpos.transaction.ContextConstants
 import org.jpos.util.Caller;
 
-def req = REQUEST.toString()
-def response = RESPONSE.toString()
-def resp = cfg.get("response", "00")
-
-def r = ctx[req].clone()
+def r = ctx.REQUEST.clone()
 r.setResponseMTI()
-r.set(39, resp)
-ctx[response] = r
+r.set(39, cfg.get("response", "00"))
+ctx.RESPONSE = r
 ctx.getResult().success (CMF.APPROVED, Caller.info(),"transaction approved")
 
 return PREPARED | NO_JOIN | READONLY
-
