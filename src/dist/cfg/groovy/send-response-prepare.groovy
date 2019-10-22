@@ -18,8 +18,8 @@
 import org.jpos.iso.ISOSource
 import org.jpos.transaction.Context
 
-def src = ctx[SOURCE.toString()]
-if (src == null || !src.isConnected())
+
+if (ctx.SOURCE == null || !ctx.SOURCE.isConnected())
     return ABORTED | READONLY | NO_JOIN
 
 return PREPARED | READONLY
