@@ -36,6 +36,6 @@ try {
     rc = PREPARED
 } catch (Throwable t) {
     log.error (t)
-    ctx.remove("DB") // "Close" participant checksfor DB in Context
+    ctx.remove("DB") // "Close" participant checks for DB in Context
 }
 return rc | NO_JOIN | READONLY
