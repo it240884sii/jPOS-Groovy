@@ -25,8 +25,13 @@
     <property name="debug" value="true"/>
     <property name="profiler" value="true"/>
 
-    <participant class="org.jpos.transaction.Open" logger="Q2" realm="open-db">
-        <property name="checkpoint" value="db-open"/>
+<!--    <participant class="org.jpos.transaction.Open" logger="Q2" realm="open-db">-->
+<!--        <property name="checkpoint" value="db-open"/>-->
+<!--    </participant>-->
+    <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="open-db">
+        <prepare src="cfg/groovy/open-db-prepare.groovy" />
+        <property name="compiled" value="true" />
+        <property name="checkpoint" value="open-db"/>
     </participant>
 
     <participant class="org.jpos.transaction.participant.GroovyGroupSelector" logger="Q2" realm="groovy-select">
@@ -50,8 +55,15 @@
             <property name="response" value="00000" />
         </participant>
 
-        <participant class="org.jpos.transaction.Close" logger="Q2" realm="close-db">
-            <property name="checkpoint" value="close"/>
+<!--        <participant class="org.jpos.transaction.Close" logger="Q2" realm="close-db">-->
+<!--            <property name="checkpoint" value="close"/>-->
+<!--        </participant>-->
+        <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="close-db">
+            <prepare src="cfg/groovy/close-db-prepare.groovy" />
+            <commit  src="cfg/groovy/close-db-commit.groovy" />
+            <abort   src="cfg/groovy/close-db-commit.groovy" />
+            <property name="compiled" value="true" />
+            <property name="checkpoint" value="close-db"/>
         </participant>
 
         <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="send-response">
@@ -77,8 +89,15 @@
             <property name="response" value="00000" />
         </participant>
 
-        <participant class="org.jpos.transaction.Close" logger="Q2" realm="close-db">
-            <property name="checkpoint" value="close"/>
+<!--        <participant class="org.jpos.transaction.Close" logger="Q2" realm="close-db">-->
+<!--            <property name="checkpoint" value="close"/>-->
+<!--        </participant>-->
+        <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="close-db">
+            <prepare src="cfg/groovy/close-db-prepare.groovy" />
+            <commit  src="cfg/groovy/close-db-commit.groovy" />
+            <abort   src="cfg/groovy/close-db-commit.groovy" />
+            <property name="compiled" value="true" />
+            <property name="checkpoint" value="close-db"/>
         </participant>
 
         <participant class="org.jpos.transaction.participant.GroovyParticipant" logger="Q2" realm="send-response">
@@ -91,3 +110,4 @@
     </group>
 
 </txnmgr>
+
